@@ -6,7 +6,12 @@ from fastapi import FastAPI
 # built from __file__ so the same path works under vercel dev, docker and production
 DATA_DIR = Path(__file__).parent / "data"
 
-app = FastAPI(title="Wind Desk API")
+# docs live under /api because only that prefix is routed to this service
+app = FastAPI(
+    title="Wind Desk API",
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json",
+)
 
 
 @app.get("/api/health")
