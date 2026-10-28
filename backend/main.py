@@ -8,7 +8,7 @@ DATA_DIR = Path(__file__).parent / "data"
 
 # docs live under /api because only that prefix is routed to this service
 app = FastAPI(
-    title="Wind Desk API",
+    title="Windsight API",
     docs_url="/api/docs",
     openapi_url="/api/openapi.json",
 )

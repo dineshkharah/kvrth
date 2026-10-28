@@ -23,7 +23,7 @@ function App() {
 
   return (
     <main>
-      <h1>Wind Desk</h1>
+      <h1>Windsight</h1>
       {!health && !error && <p>Checking the backend...</p>}
       {error && <p>Backend unreachable: {error}</p>}
       {health && (
