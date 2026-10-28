@@ -1,10 +1,3 @@
-"""Pull the January 2026 GB wind data from Elexon and write it to csv.
-
-Run this from the repo root:
-
-    .venv/Scripts/python.exe backend/scripts/fetch_data.py
-"""
-
 import time
 from datetime import date
 from pathlib import Path
