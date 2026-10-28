@@ -1,4 +1,4 @@
-from datetime import date, time
+from datetime import date
 
 import pandas as pd
 import pytest
