@@ -117,8 +117,12 @@ export const mwh = (value: number | null | undefined) =>
 export const pct = (value: number | null | undefined) =>
   value == null ? 'n/a' : `${(value * 100).toFixed(1)}%`
 
-export const signed = (value: number | null | undefined) =>
-  value == null ? 'n/a' : `${value >= 0 ? '+' : ''}${Math.round(value).toLocaleString()} MW`
+export const signed = (value: number | null | undefined) => {
+  if (value == null) return 'n/a'
+  // the || 0 turns javascript's negative zero into plain zero
+  const rounded = Math.round(value) || 0
+  return `${rounded > 0 ? '+' : ''}${rounded.toLocaleString()} MW`
+}
 
 export const ukDate = (iso: string) =>
   new Date(iso).toLocaleDateString('en-GB', {
