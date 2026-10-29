@@ -1,6 +1,8 @@
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: ../docker/backend.Dockerfile
     image: windsight-backend
     ports:
       - "8000:8000"
@@ -8,7 +10,9 @@ services:
       - ./backend:/app
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: ../docker/frontend.Dockerfile
     image: windsight-frontend
     ports:
       - "5173:5173"
@@ -22,7 +26,9 @@ services:
       - backend
 
   test:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: ../docker/backend.Dockerfile
     image: windsight-backend
     volumes:
       - ./backend:/app
@@ -30,7 +36,9 @@ services:
     profiles: ["tools"]
 
   etl:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: ../docker/backend.Dockerfile
     image: windsight-backend
     volumes:
       - ./backend:/app

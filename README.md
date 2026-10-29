@@ -164,7 +164,6 @@ Prints every table in this README from the committed data.
 
 ```
 backend/                  the Python service, and the root of the api service on Vercel
-  Dockerfile              python:3.14-slim, installs the dev requirements, runs uvicorn
   main.py                 FastAPI app and the four endpoints
   models.py               Pydantic response models, which also generate the API docs
   loader.py               reads the CSVs into pandas and caches them
@@ -183,7 +182,6 @@ backend/                  the Python service, and the root of the api service on
   .python-version         pins Python 3.14
 
 frontend/                 the React app, and the root of the web service on Vercel
-  Dockerfile              node:24-alpine, installs from the lockfile, runs the dev server
   src/
     App.tsx               shell and the two tabs
     DecisionView.tsx      day and cutoff pickers, purchase range, hourly chart and table
@@ -193,11 +191,16 @@ frontend/                 the React app, and the root of the web service on Verc
     index.css             Tailwind entry point and the colour tokens
   vite.config.ts          React and Tailwind plugins, and the dev proxy to port 8000
 
+docker/
+  backend.Dockerfile      python:3.14-slim, installs the dev requirements, runs uvicorn
+  frontend.Dockerfile     node:24-alpine, installs from the lockfile, runs the dev server
 docker-compose.yml        four services: backend, frontend, test and etl
 vercel.json               declares the two services and routes /api to Python
 ```
 
 The `test` and `etl` services share the backend image and sit behind a `tools` profile, so `docker compose up` starts only the two long running containers and the other two are reached with `docker compose run`.
+
+The Dockerfiles live in `docker/` rather than in each service root on purpose. Vercel treats a service root as a project and can read a `Dockerfile` there as the entrypoint, which switches that service to the container runtime instead of its detected framework. Keeping them out of the way removes the ambiguity.
 
 ## Architecture
 
