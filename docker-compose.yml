@@ -1,0 +1,38 @@
+services:
+  backend:
+    build: ./backend
+    image: windsight-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build: ./frontend
+    image: windsight-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      # keeps the linux node_modules from the image, the host ones are windows builds
+      - /app/node_modules
+    environment:
+      API_PROXY_TARGET: http://backend:8000
+    depends_on:
+      - backend
+
+  test:
+    build: ./backend
+    image: windsight-backend
+    volumes:
+      - ./backend:/app
+    command: pytest -q
+    profiles: ["tools"]
+
+  etl:
+    build: ./backend
+    image: windsight-backend
+    volumes:
+      - ./backend:/app
+    command: python scripts/fetch_data.py
+    profiles: ["tools"]
